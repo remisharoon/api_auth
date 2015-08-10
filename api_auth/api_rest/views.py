@@ -32,7 +32,11 @@ class UserDetail(APIView):
     """
     def get_object(self, pk):
         try:
-            return User.objects.get(pk=pk)
+            if pk.isdigit():
+                u = User.objects.get(id=pk)
+            else:
+                u = User.objects.get(username=pk)            
+            return u
         except User.DoesNotExist:
             raise Http404
 
